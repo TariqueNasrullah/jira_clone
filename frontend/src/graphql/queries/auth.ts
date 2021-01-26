@@ -2,10 +2,13 @@ import gql from 'graphql-tag'
 import { apolloClient } from '../client'
 import { User } from '@/types/user'
 
-export const createGuestAccount = gql`
-  query createGuestAccount {
-    createGuestAccount
+export const userLogin = gql`
+  query UserLogin {
+  userLogin(email: "tokyo@jira.guest", secret: "pass") {
+    id_token
+    refresh_token
   }
+}
 `
 
 export const currentUser = gql`
