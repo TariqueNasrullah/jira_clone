@@ -5,14 +5,11 @@ import store from '../store'
 
 export const authenticate = async () => {
   try {
-    const result = await loginClient.query<{ createGuestAccount: string }>({
+    const result = await loginClient.query<{ userLogin: string }>({
       query: userLogin
     })
-
-    console.log(result)
-
-    const { createGuestAccount: authToken } = result.data
-    storeAuthToken(authToken)
+    const { userLogin: authToken } = result.data
+    storeAuthToken(authToken.id_token)
     store.mutations.setIsAuthenticated(true)
     const currentUser = await fetchMe()
     store.mutations.setCurrentUser(currentUser)

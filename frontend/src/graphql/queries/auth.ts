@@ -4,10 +4,10 @@ import { User } from '@/types/user'
 
 export const userLogin = gql`
   query UserLogin {
-  userLogin(email: "tokyo@jira.guest", secret: "pass") {
-    id_token
-    refresh_token
-  }
+    userLogin(email: "tokyo@jira.guest", secret: "pass") {
+      id_token
+      refresh_token
+    }
 }
 `
 

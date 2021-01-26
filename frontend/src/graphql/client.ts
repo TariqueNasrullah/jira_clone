@@ -26,7 +26,7 @@ const appLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      Authorization: 'Bearer 1f4ASkmT5Z1bS46RreNE8hOk5MSdgGNl8kfx5RytXS1YNoSSGJeadI9mqLF3YeNrttmRz4PxRKcvGhgY00o3sGMrC54sbRvUPtlcDBYmsfn2d4n5kzVNsPnEeX5nco0RID4PBZCkyooQAmS1HDxPZiYJ6m6XAs'
+      Authorization: `Bearer ${process.env.TOKEN}`
     }
   }
 })
