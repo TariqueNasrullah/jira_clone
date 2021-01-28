@@ -8,25 +8,27 @@ export const userLogin = gql`
       id_token
       refresh_token
     }
-}
+  }
 `
 
 export const currentUser = gql`
   query currentUser {
-    currentUser {
+    loggedInUser {
+      phone
       id
-      name
-      avatarUrl
+      first_name
+      email
+      avatar
     }
   }
 `
 
 export const fetchMe = async (): Promise<User> => {
   try {
-    const res = await apolloClient.query<{ currentUser: User }>({
+    const res = await apolloClient.query<{ loggedInUser: User }>({
       query: currentUser
     })
-    return Promise.resolve(res.data.currentUser)
+    return Promise.resolve(res.data.loggedInUser)
   } catch (error) {
     return Promise.reject(error)
   }

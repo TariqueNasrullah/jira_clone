@@ -5,10 +5,10 @@
         <j-icon name="project-avatar" :size="40"></j-icon>
         <div class="pt-1 pl-2">
           <div class="mb-1 text-textDark text-15 font-medium">
-            {{ project.name }}
+            {{ project.data.name }}
           </div>
           <div class="text-textMedium text-13">
-            {{ ProjectCategoryCopy[project.category] }} project
+            {{ ProjectCategoryCopy[project.data.category] }} project
           </div>
         </div>
       </div>

@@ -16,7 +16,7 @@ import PageLoader from '@/components/Loader.vue'
 import ErrorPage from '@/components/ErrorPage.vue'
 import Modals from '@/components/Modals/Modals.vue'
 import { useQuery } from '@vue/apollo-composable'
-import { getProjectWithUsersAndIssues } from '@/graphql/queries/project'
+import { getProjectWithUsersAndIssuesMain } from '@/graphql/queries/project'
 import { mutations, getters } from './store'
 export default defineComponent({
   components: {
@@ -50,7 +50,7 @@ export default defineComponent({
     match.addListener(matchHandler)
 
     const { loading, onResult, error } = useQuery(
-      getProjectWithUsersAndIssues,
+      getProjectWithUsersAndIssuesMain,
       {},
       { fetchPolicy: 'no-cache' }
     )
@@ -58,7 +58,7 @@ export default defineComponent({
     onResult(res => {
       const { data } = res as any
       if (data) {
-        mutations.setProject(data.getProjectWithUsersAndIssues)
+        mutations.setProject(data.project)
       }
     })
 

@@ -13,7 +13,7 @@
 import { defineComponent, ref, computed } from '@vue/composition-api'
 import { useQuery } from '@vue/apollo-composable'
 import { mutations } from '@/store'
-import { getProjectWithUsersAndIssues } from '@/graphql/queries/project'
+import { getProjectWithUsersAndIssuesMain } from '@/graphql/queries/project'
 import Navigation from '@/components/Navigation/Navigation.vue'
 import PageLoader from '@/components/Loader.vue'
 import ErrorPage from '@/components/ErrorPage.vue'
@@ -42,7 +42,7 @@ export default defineComponent({
     match.addListener(matchHandler)
 
     const { loading, onResult, error } = useQuery(
-      getProjectWithUsersAndIssues,
+      getProjectWithUsersAndIssuesMain,
       {},
       { fetchPolicy: 'no-cache' }
     )
@@ -51,7 +51,7 @@ export default defineComponent({
       if (res) {
         const { data } = res
         if (data) {
-          mutations.setProject(data.getProjectWithUsersAndIssues)
+          mutations.setProject(data.project)
         }
       }
     })

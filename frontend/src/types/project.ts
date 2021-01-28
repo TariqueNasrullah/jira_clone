@@ -7,13 +7,19 @@ export enum ProjectCategory {
 }
 
 export interface Project {
-  id: number
-  name: string
-  url: string | null
-  description: string | null
-  category: ProjectCategory
-  createdAt: Date
-  updatedAt: Date
+  id: string
+  data: {
+    name: string
+    url: string | null
+    description: {
+      text: string | null
+    }
+    category: ProjectCategory
+  }
+  meta: {
+    create_at: Date
+    updated_at: Date
+  }
   issues: Issue[]
   users: User[]
 }

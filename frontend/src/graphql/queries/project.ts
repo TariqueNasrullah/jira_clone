@@ -39,3 +39,55 @@ export const updateProject = gql`
     }
   }
 `
+
+export const getProjectWithUsersAndIssuesMain = gql`
+  query MyQuery {
+    project(_id: "255c7c58-2ec2-4f6d-9909-9bbde8328981") {
+      issues {
+        id
+        data {
+          title
+          description {
+            text
+          }
+          type
+          status
+          priority
+          list_position
+        }
+        meta {
+          created_at
+          updated_at
+        }
+        users {
+          id
+        }
+      }
+      id
+      meta {
+        created_at
+        updated_at
+      }
+      users {
+        id
+        data {
+          first_name
+          avatar {
+            url
+          }
+        }
+        project {
+          id
+        }
+      }
+      data {
+        name
+        url
+        description {
+          text
+        }
+        category
+      }
+    }
+  }
+`

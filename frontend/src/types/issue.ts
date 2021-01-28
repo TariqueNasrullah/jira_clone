@@ -23,21 +23,33 @@ export enum IssuePriority {
 
 export interface Issue {
   id: string
-  title: string
-  type: IssueType
-  status: IssueStatus
-  priority: IssuePriority
-  listPosition: number
-  description: string | null
-  estimate: number | null
-  timeSpent: number | null
-  timeRemaining: number | null
-  createdAt: Date
-  updatedAt: Date
-  reporterId: string
-  userIds: string[]
+  data: {
+    title: string
+    type: IssueType
+    status: IssueStatus
+    priority: IssuePriority
+    list_position: number
+    description: {
+      text: string | null
+    }
+    estimate: number | null
+    time_spent: number | null
+    time_remaining: number | null
+  }
+  meta: {
+    created_at: Date
+    updated_at: Date
+  }
+  reported: {
+    id: string
+  }
+  users: {
+    id: string
+  }
   comments: Comment[]
-  projectId: number | string
+  project: {
+    id: string
+  }
 }
 
 export interface IssueCreateDTO {

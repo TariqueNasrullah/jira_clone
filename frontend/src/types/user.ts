@@ -3,9 +3,9 @@ import { Project } from './project'
 
 export interface User {
   id: string
-  name: string
+  first_name: string
   email: string
-  avatarUrl: string
+  avatar: string
   createdAt: Date
   updatedAt: Date
   comments: Comment[]

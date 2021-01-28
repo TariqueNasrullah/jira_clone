@@ -26,7 +26,7 @@ const appLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      Authorization: `Bearer ${process.env.TOKEN}`
+      Authorization: `Bearer ${process.env.VUE_APP_TOKEN}`
     }
   }
 })

@@ -6,6 +6,7 @@ const store = Vue.observable({
   currentUser: {} as User,
   project: {} as Project,
   isAuthenticated: !!getStoredAuthToken(),
+  henTent: "",
   filters: {
     searchTerm: '',
     userIds: [],
@@ -24,7 +25,10 @@ export const getters = {
 export const mutations = {
   setFilters: (filters: Filters) => (store.filters = filters),
   setCurrentUser: (user: User) => (store.currentUser = user),
-  setProject: (project: Project) => (store.project = project),
+  setProject: (project: Project) => {
+    console.log(project.id.length);
+    store.project = project
+  },
   setIsAuthenticated: (isAuth: boolean) => (store.isAuthenticated = isAuth)
 }
 
