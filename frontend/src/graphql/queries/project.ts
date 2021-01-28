@@ -61,6 +61,15 @@ export const getProjectWithUsersAndIssuesMain = gql`
         }
         users {
           id
+          data {
+            first_name
+            avatar {
+              url
+            }
+          }
+          project {
+            id
+          }
         }
       }
       id

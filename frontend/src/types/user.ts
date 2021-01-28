@@ -3,11 +3,17 @@ import { Project } from './project'
 
 export interface User {
   id: string
-  first_name: string
-  email: string
-  avatar: string
-  createdAt: Date
-  updatedAt: Date
+  data: {
+    first_name: string
+    email: string
+    avatar: {
+      url: string
+    }
+  }
+  meta: {
+    created_at: Date
+    updated_at: Date
+  }
   comments: Comment[]
   issues: Issue[]
   project: Project

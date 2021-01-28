@@ -40,12 +40,10 @@ export interface Issue {
     created_at: Date
     updated_at: Date
   }
-  reported: {
+  reporter: {
     id: string
   }
-  users: {
-    id: string
-  }
+  users: User[]
   comments: Comment[]
   project: {
     id: string

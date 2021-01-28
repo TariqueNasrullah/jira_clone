@@ -20,9 +20,9 @@
       >
         <j-avatar
           class="cursor-pointer select-none shadow-outline-white"
-          :name="user.name"
+          :name="user.data.first_name"
           :size="36"
-          :avatarUrl="user.avatarUrl"
+          :avatarUrl="user.data.avatar.url"
           @click.native="handleUser(user.id)"
         />
       </div>

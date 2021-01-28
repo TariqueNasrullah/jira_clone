@@ -26,7 +26,6 @@ export const mutations = {
   setFilters: (filters: Filters) => (store.filters = filters),
   setCurrentUser: (user: User) => (store.currentUser = user),
   setProject: (project: Project) => {
-    console.log(project.id.length);
     store.project = project
   },
   setIsAuthenticated: (isAuth: boolean) => (store.isAuthenticated = isAuth)

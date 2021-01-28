@@ -2,7 +2,7 @@
   <div
     class="pr-6 py-8 pl-10  h-full w-full flex flex-col h-full w-full flex flex-col"
   >
-    <j-breadcrumbs :items="['Projects', project.name, 'Issues', issueId]" />
+    <j-breadcrumbs :items="['Projects', project.data.name, 'Issues', issueId]" />
     <IssueDetails
       :issueId="issueId"
       :withFullScreenButton="false"

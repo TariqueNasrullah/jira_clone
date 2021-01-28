@@ -44,7 +44,7 @@ const filterIssues = (
 
   if (searchTerm) {
     issues = issues.filter(issue =>
-      issue.title.toLowerCase().includes(searchTerm.toLowerCase())
+      issue.data.title.toLowerCase().includes(searchTerm.toLowerCase())
     )
   }
   if (userIds.length > 0) {

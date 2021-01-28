@@ -2,12 +2,12 @@
   <div class="issue-wrap">
     <div @click="openIssueDetails" class="issue">
       <p class="pb-3 text-15 text-textDarkest">
-        {{ issue.title }}
+        {{ issue.data.title }}
       </p>
       <div class="flex justify-between items-center">
         <div class="flex items-center">
           <j-icon
-            :name="issue.type"
+            :name="issue.data.type"
             :size="20"
             class="text-textMedium mr-1"
           ></j-icon>
@@ -23,7 +23,7 @@
             v-for="user in assignees"
             :key="user.id"
             :size="24"
-            :avatarUrl="user.avatarUrl"
+            :avatarUrl="user.data.avatar.url"
             :name="user.name"
             class="shadow-outline-white -ml-1"
           />
@@ -54,18 +54,18 @@ export default defineComponent({
   setup(props) {
     const project = computed(getters.project)
     const assignees = computed(() =>
-      props.issue.userIds.map(userId =>
-        project.value.users.find(user => user.id === userId)
+      props.issue.users.map(cUser =>
+        project.value.users.find(user => user.id === cUser.id)
       )
     )
 
     const issuePriorityStyles = computed(() => ({
       icon: [IssuePriority.LOW, IssuePriority.LOWEST].includes(
-        props.issue.priority
+        props.issue.data.priority
       )
         ? 'arrow-down'
         : 'arrow-up',
-      color: issuePriorityColors[props.issue.priority]
+      color: issuePriorityColors[props.issue.data.priority]
     }))
 
     const openIssueDetails = () => {

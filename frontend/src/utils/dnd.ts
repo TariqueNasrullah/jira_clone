@@ -58,8 +58,8 @@ export const getSortedListIssues = (
   status: string
 ) =>
   issues
-    .filter(issue => issue.status === status)
-    .sort((a, b) => a.listPosition - b.listPosition)
+    .filter(issue => issue.data.status === status)
+    .sort((a, b) => a.data.list_position - b.data.list_position)
 
 const getAfterDropPrevNextIssue = (
   allIssues: Issue[],
@@ -109,13 +109,13 @@ export const calculateIssueListPosition = (
   if (!prevIssue && !nextIssue) {
     position = 1
   } else if (!prevIssue) {
-    position = nextIssue.listPosition - 1
+    position = nextIssue.data.list_position - 1
   } else if (!nextIssue) {
-    position = prevIssue.listPosition + 1
+    position = prevIssue.data.list_position + 1
   } else {
     position =
-      prevIssue.listPosition +
-      (nextIssue.listPosition - prevIssue.listPosition) / 2
+      prevIssue.data.list_position +
+      (nextIssue.data.list_position - prevIssue.data.list_position) / 2
   }
   return position
 }

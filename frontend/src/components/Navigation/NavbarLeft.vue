@@ -54,10 +54,10 @@
       </div>
       <div class="flex-auto"></div>
       <div class="item">
-        <div v-tippy="currentUser.name" class="itemIcon">
+        <div v-tippy="currentUser.first_name" class="itemIcon">
           <j-avatar
-            :name="currentUser.name"
-            :avatarUrl="currentUser.avatarUrl"
+            :name="currentUser.first_name"
+            :avatarUrl="currentUser.avatar"
             :size="26"
           ></j-avatar>
         </div>

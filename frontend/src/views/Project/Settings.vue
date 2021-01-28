@@ -75,17 +75,15 @@ export default defineComponent({
     const isWorking = ref<boolean>(false)
     const queryEnabled = ref<boolean>(false)
 
-    const projectUpdateDTO = reactive(
-      pick(project.value, ['name', 'url', 'description', 'category'])
-    )
+    const projectUpdateDTO = reactive(pick(project.value, ['data']))
 
     const isRequired = (value: string) =>
       ['', null, undefined].indexOf(value) === -1
 
     const isValid = computed(
       () =>
-        isRequired(projectUpdateDTO.name) &&
-        isRequired(projectUpdateDTO.category)
+        isRequired(projectUpdateDTO.data.name) &&
+        isRequired(projectUpdateDTO.data.category)
     )
     const projectCategoryOptions = Object.values(ProjectCategory).map(
       category => ({

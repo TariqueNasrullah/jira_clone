@@ -82,7 +82,7 @@ export default defineComponent({
       if (removedIndex != null) {
         source.value = {
           index: removedIndex,
-          droppableId: payload.status
+          droppableId: payload.data.status
         }
       }
 
