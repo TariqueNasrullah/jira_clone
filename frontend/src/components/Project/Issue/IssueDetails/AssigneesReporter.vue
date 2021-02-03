@@ -19,20 +19,20 @@
           <div class="flex items-center">
             <j-avatar
               :size="20"
-              :avatarUrl="user.avatarUrl"
-              :name="user.name"
+              :avatarUrl="user.data.avatar.url"
+              :name="user.data.first_name"
             />
             <div class="ml-1-5 mr-1">
-              {{ user.name }}
+              {{ user.data.first_name }}
             </div>
           </div>
         </j-button>
       </template>
       <template v-slot:option="{ user }">
         <div class="my-px mr-4 flex items-center">
-          <j-avatar :size="20" :avatarUrl="user.avatarUrl" :name="user.name" />
+          <j-avatar :size="20" :avatarUrl="user.data.avatar.url" :name="user.data.first_name" />
           <div class="ml-1-5 mr-1">
-            {{ user.name }}
+            {{ user.data.first_name }}
           </div>
         </div>
       </template>
@@ -47,7 +47,7 @@
       isMulti
       :withClearValue="false"
       :dropdownWidth="300"
-      :value="userIds"
+      :value="userIDs"
       :options="userOptions"
       customRender
       customRenderOption
@@ -58,11 +58,11 @@
           <div class="flex items-center">
             <j-avatar
               :size="20"
-              :avatarUrl="user.avatarUrl"
-              :name="user.name"
+              :avatarUrl="user.data.avatar.url"
+              :name="user.data.first_name"
             />
             <div class="ml-1-5 mr-1.5">
-              {{ user.name }}
+              {{ user.data.first_name }}
             </div>
             <j-icon
               v-if="remove"
@@ -76,9 +76,9 @@
       </template>
       <template v-slot:option="{ user }">
         <div class="my-px mr-4 flex items-center">
-          <j-avatar :size="20" :avatarUrl="user.avatarUrl" :name="user.name" />
+          <j-avatar :size="20" :avatarUrl="user.data.avatar.url" :name="user.data.first_name" />
           <div class="ml-1-5 mr-1">
-            {{ user.name }}
+            {{ user.data.first_name }}
           </div>
         </div>
       </template>
@@ -90,14 +90,15 @@
 import { defineComponent, computed } from '@vue/composition-api'
 import { getters } from '../../../../store'
 import Omit from 'lodash.omit'
+import { User } from "@/types";
 export default defineComponent({
   props: {
     reporterId: {
       type: String,
       required: true
     },
-    userIds: {
-      type: Array as () => Array<string>,
+    users: {
+      type: Array as () => Array<User>,
       required: true
     },
     updateIssue: {
@@ -108,7 +109,7 @@ export default defineComponent({
   setup(props) {
     const project = computed(getters.project)
     const userOptions = project.value.users.map(user => ({
-      label: user.name,
+      label: user.data.first_name,
       value: user.id,
       user
     }))
@@ -132,8 +133,11 @@ export default defineComponent({
       }
     }
 
+    const userIDs = computed(() =>props.users.map(user => user.id))
+
     return {
       userOptions,
+      userIDs,
       updateIssueReporter,
       updateIssueAssignees
     }

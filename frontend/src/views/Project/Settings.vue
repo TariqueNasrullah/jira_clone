@@ -1,6 +1,6 @@
 <template>
   <div class="pr-6 py-8 pl-10 h-full w-full flex flex-col">
-    <j-breadcrumbs :items="['Projects', project.name, 'Project Details']" />
+    <j-breadcrumbs :items="['Projects', project.data.name, 'Project Details']" />
     <header class="mt-3 flex justify-between text-textDarkest">
       <div class="text-2xl font-medium">Project Details</div>
     </header>
@@ -8,19 +8,19 @@
       <div class="pt-5">
         <label class="label" for="name">Name</label>
         <j-input
-          :value="projectUpdateDTO.name"
+          :value="projectUpdateDTO.data.name"
           id="name"
           placeholder="Project name"
-          @input="v => (projectUpdateDTO.name = v)"
+          @input="v => (projectUpdateDTO.data.name = v)"
         />
       </div>
       <div class="pt-5">
         <label class="label" for="url">URL</label>
         <j-input
-          :value="projectUpdateDTO.url"
+          :value="projectUpdateDTO.data.url"
           id="url"
           placeholder="URL"
-          @input="v => (projectUpdateDTO.url = v)"
+          @input="v => (projectUpdateDTO.data.url = v)"
         />
       </div>
       <div class="pt-5">
@@ -28,8 +28,8 @@
         <j-textarea
           placeholder="No description"
           class="text-15 bg-backgroundLightest"
-          :value="projectUpdateDTO.description"
-          @input="v => (projectUpdateDTO.description = v)"
+          :value="projectUpdateDTO.data.description.text"
+          @input="v => (projectUpdateDTO.data.description.text = v)"
         />
         <div class="tip">
           Describe the project in as much detail as you'd like.
@@ -38,10 +38,10 @@
       <div class="pt-5">
         <label class="label" for="name">Project Category</label>
         <j-select
-          :value="projectUpdateDTO.category"
+          :value="projectUpdateDTO.data.category"
           searchable
           :options="projectCategoryOptions"
-          @change="v => (projectUpdateDTO.category = v)"
+          @change="v => (projectUpdateDTO.data.category = v)"
         />
       </div>
       <div class="pt-7">

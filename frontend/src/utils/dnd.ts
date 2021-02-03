@@ -35,7 +35,7 @@ export const insertItemIntoArray = (
 export const updateArrayItemById = (
   arr: Issue[],
   itemId: string,
-  fields: Partial<Issue>
+  fields: any
 ) => {
   const arrClone = [...arr]
   const item = arrClone.find(({ id }) => id === itemId)

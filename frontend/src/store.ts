@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import { getStoredAuthToken } from '@/utils/authToken'
 import { Filters, Project, User } from '@/types'
+import CurrentUser from '@/types/currentUser'
 
 const store = Vue.observable({
   currentUser: {} as User,
   project: {} as Project,
   isAuthenticated: !!getStoredAuthToken(),
-  henTent: "",
+  henTent: '',
   filters: {
     searchTerm: '',
     userIds: [],

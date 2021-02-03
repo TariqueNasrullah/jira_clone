@@ -140,7 +140,7 @@ export default defineComponent({
       default: undefined
     },
     defaultValue: {
-      type: [String, Array, Number],
+      type: [Array, String, Number],
       default: undefined
     },
     placeholder: {

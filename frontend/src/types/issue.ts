@@ -14,11 +14,11 @@ export enum IssueStatus {
 }
 
 export enum IssuePriority {
-  HIGHEST = '5',
-  HIGH = '4',
-  MEDIUM = '3',
-  LOW = '2',
-  LOWEST = '1'
+  HIGHEST = 'highest',
+  HIGH = 'high',
+  MEDIUM = 'medium',
+  LOW = 'low',
+  LOWEST = 'lowest'
 }
 
 export interface Issue {
@@ -31,6 +31,8 @@ export interface Issue {
     list_position: number
     description: {
       text: string | null
+      markdown: string | null
+      html: string | null
     }
     estimate: number | null
     time_spent: number | null
@@ -40,7 +42,7 @@ export interface Issue {
     created_at: Date
     updated_at: Date
   }
-  reporter: {
+  reporter_user: {
     id: string
   }
   users: User[]

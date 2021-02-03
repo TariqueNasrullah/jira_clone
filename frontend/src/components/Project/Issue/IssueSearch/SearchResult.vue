@@ -3,11 +3,11 @@
     @click="selectResult"
     class="flex items-center py-1 px-3 rounded transition duration-100 cursor-pointer select-none hover:bg-backgroundLight"
   >
-    <j-icon :size="24" class="flex-shrink-0" :name="issue.type"></j-icon>
+    <j-icon :size="24" class="flex-shrink-0" :name="issue.data.type"></j-icon>
     <div class="pl-4">
-      <div class="text-textDark text-15">{{ issue.title }}</div>
+      <div class="text-textDark text-15">{{ issue.data.title }}</div>
       <div class="uppercase text-xs text-textMedium">
-        {{ `${issue.type}-${issue.id}` }}
+        {{ `${issue.data.type}-${issue.id}` }}
       </div>
     </div>
   </div>

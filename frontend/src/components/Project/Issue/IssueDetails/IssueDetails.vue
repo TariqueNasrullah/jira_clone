@@ -6,7 +6,7 @@
       <IssueType
         :updateIssue="handleUpdateIssue"
         :issueId="issueCopy.id"
-        :value="issueCopy.type"
+        :value="issueCopy.data.type"
       />
       <div class="flex-auto"></div>
       <j-button icon="feedback" variant="empty">Give Feedback</j-button>
@@ -33,11 +33,11 @@
       <!-- LEFT SECTION -->
       <div class="sm:w-full md:w-7/12 lg:w-4/6 pr-10">
         <!-- Title -->
-        <IssueTitle :updateIssue="handleUpdateIssue" :value="issueCopy.title" />
+        <IssueTitle :updateIssue="handleUpdateIssue" :value="issueCopy.data.title" />
         <!-- Description -->
         <IssueDescription
           :updateIssue="handleUpdateIssue"
-          :initialValue="issueCopy.description"
+          :initialValue="issueCopy.data.description.html"
         />
         <!-- Comments -->
         <div class="pt-10">
@@ -65,17 +65,17 @@
         <!-- STATUS -->
         <IssueStatus
           :updateIssue="handleUpdateIssue"
-          :value="issueCopy.status"
+          :value="issueCopy.data.status"
         />
         <!-- AssigneesReporter -->
         <IssueAssigneesReporter
-          :reporterId="issueCopy.reporterId"
-          :userIds="issueCopy.userIds"
+          :reporterId="issueCopy.reporter_user.id"
+          :users="issueCopy.users"
           :updateIssue="handleUpdateIssue"
         />
         <!-- PRIORITY -->
         <IssuePriority
-          :value="issueCopy.priority"
+          :value="issueCopy.data.priority"
           :updateIssue="handleUpdateIssue"
         />
         <!-- DATES -->
@@ -83,10 +83,10 @@
           class="mt-3 pt-3 leading-loose border-t border-borderLightest text-textMedium text-13"
         >
           <div>
-            Created - {{ formatDateTimeConversational(issueCopy.createdAt) }}
+            Created - {{ formatDateTimeConversational(issueCopy.meta.created_at) }}
           </div>
           <div>
-            Updated - {{ formatDateTimeConversational(issueCopy.updatedAt) }}
+            Updated - {{ formatDateTimeConversational(issueCopy.meta.updated_at) }}
           </div>
         </div>
       </div>
@@ -141,7 +141,7 @@ export default defineComponent({
   },
   props: {
     issueId: {
-      type: [String, Number],
+      type: String,
       required: true
     },
     withCloseButton: {
@@ -159,14 +159,14 @@ export default defineComponent({
     const currentUser = computed(getters.currentUser)
 
     const { onResult, loading, refetch: refetchIssue } = useQuery<{
-      getIssueWithUsersAndComments: Issue
+      issue: Issue
     }>(getIssueWithUsersAndComments, {
-      id: Number(props.issueId)
+      id: String(props.issueId)
     })
 
     onResult(res => {
       if (res && res.data && !res.loading) {
-        issueCopy.value = res.data.getIssueWithUsersAndComments
+        issueCopy.value = res.data.issue
       }
     })
 

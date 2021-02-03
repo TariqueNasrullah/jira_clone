@@ -5,7 +5,7 @@ import store from '../store'
 
 export const authenticate = async () => {
   try {
-    const result = await loginClient.query<{ userLogin: string }>({
+    const result = await loginClient.query<{ userLogin: any }>({
       query: userLogin
     })
     const { userLogin: authToken } = result.data

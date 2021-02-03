@@ -3,15 +3,15 @@
     <!-- user-avatar -->
     <j-avatar
       class="absolute top-0 left-0"
-      :name="comment.user.name"
-      :avatarUrl="comment.user.avatarUrl"
+      :name="comment.user.data.first_name"
+      :avatarUrl="comment.user.data.avatar.url"
     />
     <!-- content -->
     <div class="pl-10">
       <!-- username -->
       <div
         v-if="!isCreate"
-        v-text="comment.user.name"
+        v-text="comment.user.data.first_name"
         class="inline-block mr-3 mb-2 text-textDark font-medium"
       />
       <!-- createdAt -->
@@ -22,11 +22,17 @@
       />
       <!-- body-form -->
       <div v-if="isFormOpen">
-        <j-textarea
+        <!--        <j-textarea-->
+        <!--          v-model="newComment"-->
+        <!--          autoFocus-->
+        <!--          rows="2"-->
+        <!--          @keydown="handleKeyDown"-->
+        <!--          placeholder="Add a comment..."-->
+        <!--        />-->
+        <j-text-editor
+          mode="write"
           v-model="newComment"
-          autoFocus
-          rows="2"
-          @keydown="handleKeyDown"
+          ref="editor"
           placeholder="Add a comment..."
         />
         <div class="flex pt-2 items-center">
@@ -53,7 +59,17 @@
         >
           Add a comment...
         </p>
-        <p v-else v-text="comment.body" class="pb-2 whitespace-pre-wrap"></p>
+        <!--        <p-->
+        <!--          v-else-->
+        <!--          v-text="comment.data.body.html"-->
+        <!--          class="pb-2 whitespace-pre-wrap"-->
+        <!--        ></p>-->
+        <j-text-editor
+          v-else
+          mode="read"
+          :value="comment.data.body.html"
+          ref="editor"
+        />
         <!-- edit-link -->
         <div v-if="!isCreate && !readOnly">
           <div
@@ -100,12 +116,14 @@ export default defineComponent({
   },
   setup(props, { root, emit }) {
     const currentUser = computed(getters.currentUser)
-    const newComment = ref<string>(props.isCreate ? '' : props.comment.body)
+    const newComment = ref<string>(
+      props.isCreate ? '' : props.comment.data.body.text
+    )
     const isWorking = ref<boolean>(false)
     const isFormOpen = ref<boolean>(false)
     const isCommentDeleteConfirmOpen = ref<boolean>(false)
     const readOnly = computed(
-      () => currentUser.value.id != props.comment.userId
+      () => currentUser.value.id != props.comment.user.id
     )
 
     const { mutate: createMutation } = useMutation(createComment)
@@ -117,7 +135,7 @@ export default defineComponent({
         isWorking.value = true
         const comment = {
           body: newComment.value,
-          issueId: props.comment.issueId,
+          issueId: props.comment.issue.id,
           userId: props.comment.user.id
         }
         // eslint-disable-next-line
@@ -141,7 +159,7 @@ export default defineComponent({
         isWorking.value = true
         const comment = {
           body: newComment.value,
-          issueId: props.comment.issueId,
+          issueId: props.comment.issue.id,
           userId: props.comment.user.id
         }
         // eslint-disable-next-line
@@ -176,7 +194,7 @@ export default defineComponent({
     }
 
     const createdAt = computed(() =>
-      formatDateTimeConversational(props.comment.createdAt)
+      formatDateTimeConversational(props.comment.meta.created_at)
     )
 
     const handleFakeTextareaClicked = () => {

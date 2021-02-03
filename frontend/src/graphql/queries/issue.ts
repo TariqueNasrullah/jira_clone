@@ -1,30 +1,58 @@
 import gql from 'graphql-tag'
 
 export const getIssueWithUsersAndComments = gql`
-  query getIssue($id: Int!) {
-    getIssueWithUsersAndComments(issueId: $id) {
+  query getIssue($id: String!) {
+    issue(_id: $id) {
       id
-      title
-      description
-      type
-      status
-      priority
-      reporterId
-      listPosition
-      createdAt
-      updatedAt
-      userIds
+      data {
+        description {
+          text
+          markdown
+          html
+        }
+        estimate
+        list_position
+        priority
+        status
+        time_remaining
+        time_spent
+        title
+        type
+      }
+      reporter_user {
+        id
+      }
+      meta {
+        created_at
+        updated_at
+      }
+      users {
+        id
+      }
       comments {
         id
-        body
-        updatedAt
-        issueId
-        userId
-        createdAt
+        data {
+          body {
+            text
+            html
+            markdown
+          }
+        }
+        issue {
+          id
+        }
         user {
           id
-          name
-          avatarUrl
+          data {
+            first_name
+            avatar {
+              url
+            }
+          }
+        }
+        meta {
+          created_at
+          updated_at
         }
       }
     }
@@ -32,19 +60,31 @@ export const getIssueWithUsersAndComments = gql`
 `
 
 export const getProjectIssues = gql`
-  query getProjectIssues($searchTerm: String) {
-    getProjectIssues(searchTerm: $searchTerm) {
-      id
-      title
-      description
-      type
-      reporterId
-      status
-      priority
-      listPosition
-      createdAt
-      updatedAt
-      userIds
+  query getProjectIssues($contains: String) {
+    project(_id: "255c7c58-2ec2-4f6d-9909-9bbde8328981") {
+      issues(where: { title: { contains: $contains } }) {
+        id
+        data {
+          type
+          description {
+            html
+          }
+          title
+          status
+          priority
+          list_position
+        }
+        reporter_user {
+          id
+        }
+        users {
+          id
+        }
+      }
+      meta {
+        created_at
+        updated_at
+      }
     }
   }
 `

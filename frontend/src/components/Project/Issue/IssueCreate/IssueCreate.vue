@@ -214,7 +214,7 @@ export default defineComponent({
       if (!project.value) return []
       return project.value.users.map(user => ({
         value: user.id,
-        label: user.name,
+        label: user.data.first_name,
         user
       }))
     })

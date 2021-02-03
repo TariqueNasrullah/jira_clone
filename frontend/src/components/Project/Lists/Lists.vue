@@ -40,13 +40,16 @@ export default defineComponent({
       if (!isPositionChanged(s, d)) return
 
       const issueUpdateValues = {
-        status: d.droppableId,
-        listPosition: calculateIssueListPosition(
-          project.value.issues,
-          d,
-          s,
-          issueId
-        )
+        data: {
+          status: d.droppableId,
+          // eslint-disable-next-line @typescript-eslint/camelcase
+          list_position: calculateIssueListPosition(
+            project.value.issues,
+            d,
+            s,
+            issueId
+          )
+        }
       }
 
       const issues = updateArrayItemById(

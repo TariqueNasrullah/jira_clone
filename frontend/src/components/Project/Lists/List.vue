@@ -50,16 +50,19 @@ const filterIssues = (
   if (userIds.length > 0) {
     issues = issues.filter(
       issue =>
-        [issue.userIds, userIds].reduce((a, b) => a.filter(c => b.includes(c)))
-          .length > 0
+        [issue.users.map(user => user.id), userIds].reduce((a, b) =>
+          a.filter(c => b.includes(c))
+        ).length > 0
     )
   }
   if (myOnly && currentUserId) {
-    issues = issues.filter(issue => issue.userIds.includes(currentUserId))
+    issues = issues.filter(
+      issue => issue.users.filter(user => user.id === currentUserId).length > 0
+    )
   }
   if (recent) {
     issues = issues.filter(issue =>
-      dayjs(issue.updatedAt).isAfter(dayjs().subtract(3, 'day'))
+      dayjs(issue.meta.updated_at).isAfter(dayjs().subtract(3, 'day'))
     )
   }
   return issues

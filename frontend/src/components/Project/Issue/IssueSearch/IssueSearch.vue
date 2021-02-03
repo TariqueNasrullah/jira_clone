@@ -26,17 +26,17 @@
           :issue="issue"
         />
       </div>
-      <div v-if="!isSearchTermEmpty && matchingIssues.length > 0">
+      <div v-if="!isSearchTermEmpty && fetchedProject">
         <div class="sectionTitle">Matching Issues</div>
         <SearchResult
-          v-for="issue in matchingIssues"
+          v-for="issue in fetchedProject.issues"
           :key="issue.id"
           :issue="issue"
         />
       </div>
       <div
         class="pt-10 flex flex-col justify-center items-center"
-        v-if="!isSearchTermEmpty && !loading && matchingIssues.length === 0"
+        v-if="!isSearchTermEmpty && !loading && !fetchedProject"
       >
         <j-icon :size="125" name="no-result"></j-icon>
         <div class="pt-8 font-medium text-xl">
@@ -58,6 +58,7 @@ import { Issue } from '@/types/issue'
 import { getters } from '@/store'
 import { debounce } from 'throttle-debounce'
 import { CombinedVueInstance } from 'vue/types/vue'
+import { Project } from "@/types";
 // eslint-disable-next-line
 const sortByNewest = (items: any[] = [], sortField: string) =>
   items.sort((a, b) => -a[sortField].localeCompare(b[sortField]))
@@ -73,22 +74,22 @@ export default defineComponent({
     const searchInputRef = ref<
       CombinedVueInstance<Vue, object, object, object, object>
     >(null)
-    const { result, refetch, loading } = useQuery<Issue[]>(getProjectIssues, {
-      searchTerm: searchTerm.value
+    const { result, refetch, loading } = useQuery<Project>(getProjectIssues, {
+      contains: searchTerm.value
     })
 
     const project = computed(getters.project)
 
-    const matchingIssues = useResult(result, [])
+    const fetchedProject = useResult(result, {})
     const recentIssues = computed(() =>
-      sortByNewest(project.value.issues, 'createdAt').slice(0, 10)
+      sortByNewest(project.value.issues, 'id').slice(0, 10)
     )
 
     const handleSearchChange = debounce(500, (value: string) => {
       searchTerm.value = value.trim()
       isSearchTermEmpty.value = !searchTerm.value
       if (searchTerm.value) {
-        refetch({ searchTerm: searchTerm.value })
+        refetch({ contains: searchTerm.value })
       }
     })
 
@@ -102,7 +103,7 @@ export default defineComponent({
     })
 
     return {
-      matchingIssues,
+      fetchedProject,
       loading,
       recentIssues,
       isSearchTermEmpty,
